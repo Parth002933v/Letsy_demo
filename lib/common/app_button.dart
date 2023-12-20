@@ -118,7 +118,10 @@ class SquareButton extends StatelessWidget {
                   width: 190.w,
                   // child: Image.memory(image!),
                   child: Image.memory(
+                    key: key,
                     image!,
+
+                    gaplessPlayback: true,
 
                     isAntiAlias: false,
                     fit: BoxFit.cover,

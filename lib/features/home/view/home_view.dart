@@ -9,11 +9,20 @@ import 'package:letsy_demo/features/edit/view/edit_view.dart';
 import 'package:letsy_demo/features/home/components/components.dart';
 import 'package:letsy_demo/features/home/controller/home_controller.dart';
 
-class HomeView extends ConsumerWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<HomeView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
     final _getSavedImageP = ref.watch(getSavedImageProvider).value;
 
     return Scaffold(
@@ -71,6 +80,7 @@ class HomeView extends ConsumerWidget {
                     } else {
                       final e = _getSavedImageP![index - 1];
                       return SquareButton(
+                        key: UniqueKey(),
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(

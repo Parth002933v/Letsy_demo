@@ -11,7 +11,10 @@ class OutfitCollectionView extends StatefulWidget {
   State<OutfitCollectionView> createState() => _OutfitCollectionViewState();
 }
 
-class _OutfitCollectionViewState extends State<OutfitCollectionView> {
+class _OutfitCollectionViewState extends State<OutfitCollectionView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlaye;
   @override
@@ -36,6 +39,7 @@ class _OutfitCollectionViewState extends State<OutfitCollectionView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Stack(
         // fit: StackFit.expand,

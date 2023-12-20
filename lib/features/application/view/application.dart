@@ -26,6 +26,7 @@ class _ApplicationState extends ConsumerState<Application> {
     final bottomNavBarN = ref.read(bottomNavBarProvider.notifier);
     return Scaffold(
       body: PageView(
+        key: PageStorageKey('application'),
         physics: const NeverScrollableScrollPhysics(),
         controller: _controller,
         onPageChanged: (value) => bottomNavBarN.update((state) => value),
