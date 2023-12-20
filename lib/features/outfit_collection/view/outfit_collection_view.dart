@@ -82,9 +82,9 @@ class _OutfitCollectionViewState extends State<OutfitCollectionView> {
                     ),
                   ),
                 ),
-                PageView(
-                  children: [
-                    GridView.builder(
+                PageView.custom(
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    (context, index) => GridView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -99,22 +99,7 @@ class _OutfitCollectionViewState extends State<OutfitCollectionView> {
                         onTap: () {},
                       ),
                     ),
-                    GridView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 9 / 11,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemCount: 3,
-                      itemBuilder: (context, index) => SquareButton(
-                        onTap: () {},
-                      ),
-                    ),
-                  ],
+                  ),
                 )
               ],
             ),
