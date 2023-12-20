@@ -38,53 +38,70 @@ class _OutfitCollectionViewState extends State<OutfitCollectionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        // fit: StackFit.expand,
         children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    FutureBuilder(
-                      future: _initializeVideoPlaye,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return SizedBox(
-                            height: 500,
-                            child: VideoPlayer(_controller),
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      },
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  FutureBuilder(
+                    future: _initializeVideoPlaye,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return SizedBox(
+                          height: 500,
+                          child: VideoPlayer(_controller),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
+                  Positioned(
+                    bottom: 20.h,
+                    right: 20.w,
+                    left: 20.w,
+                    // width: 200.w,
+                    child: RoundedButton(
+                      text: 'Try On',
+                      onTap: () {},
                     ),
-                    Positioned(
-                      bottom: 20.h,
-                      right: 20.w,
-                      left: 20.w,
-                      // width: 200.w,
-                      child: RoundedButton(
-                        text: 'Try On',
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20)
+                    .copyWith(top: 40, bottom: 20),
+                child: Text(
+                  'New This Week',
+                  style: TextStyle(
+                    fontSize: 25,
+                    height: 0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: PageView(
+                  pageSnapping: true,
+                  children: [
+                    GridView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      shrinkWrap: true,
+                      // physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 9 / 11,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
+                      itemCount: 10,
+                      itemBuilder: (context, index) => SquareButton(
                         onTap: () {},
                       ),
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20)
-                      .copyWith(top: 40, bottom: 20),
-                  child: Text(
-                    'New This Week',
-                    style: TextStyle(
-                      fontSize: 25,
-                      height: 0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                PageView.custom(
-                  childrenDelegate: SliverChildBuilderDelegate(
-                    (context, index) => GridView.builder(
+                    GridView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -94,15 +111,15 @@ class _OutfitCollectionViewState extends State<OutfitCollectionView> {
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                       ),
-                      itemCount: 3,
+                      itemCount: 10,
                       itemBuilder: (context, index) => SquareButton(
                         onTap: () {},
                       ),
                     ),
-                  ),
-                )
-              ],
-            ),
+                  ],
+                ),
+              )
+            ],
           ),
           Positioned(
             right: 10.w,
