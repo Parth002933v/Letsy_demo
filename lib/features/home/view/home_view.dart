@@ -51,12 +51,12 @@ class HomeView extends ConsumerWidget {
                   // cacheExtent: 10,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10.0,
                     mainAxisSpacing: 10.0,
                   ),
+
                   itemCount: 1 + (_getSavedImageP?.length ?? 0),
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -71,7 +71,6 @@ class HomeView extends ConsumerWidget {
                     } else {
                       final e = _getSavedImageP![index - 1];
                       return SquareButton(
-                        key: UniqueKey(),
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(

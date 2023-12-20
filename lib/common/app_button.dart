@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -78,7 +79,7 @@ class SquareButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final EdgeInsets padding;
-  final File? image;
+  final Uint8List? image;
   const SquareButton({
     Key? key,
     required this.onTap,
@@ -86,8 +87,8 @@ class SquareButton extends StatelessWidget {
     this.color = AppColor.DarkLight,
     this.textColor = Colors.white,
     this.padding = const EdgeInsets.all(0),
-    // required File image,
     this.image,
+    // required File image,
   }) : super(key: key);
 
   @override
@@ -115,7 +116,8 @@ class SquareButton extends StatelessWidget {
                 child: SizedBox(
                   height: 190.w,
                   width: 190.w,
-                  child: Image.file(
+                  // child: Image.memory(image!),
+                  child: Image.memory(
                     image!,
 
                     isAntiAlias: false,
@@ -125,6 +127,48 @@ class SquareButton extends StatelessWidget {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class RoundedButton extends StatelessWidget {
+  final String text;
+  final String? icon;
+  final void Function() onTap;
+  const RoundedButton({
+    super.key,
+    required this.text,
+    this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      splashColor: Colors.grey,
+      height: 50,
+      color: Color(0xFF8C65FD),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      onPressed: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          icon == null
+              ? const SizedBox()
+              : SvgIcon(
+                  icon: AssetsConstants.ic_close, width: 25.w, higth: 25.h),
+          SizedBox(width: 10.w),
+          Text(
+            text,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontSize: 19.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+          ),
+        ],
       ),
     );
   }

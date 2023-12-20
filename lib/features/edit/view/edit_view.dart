@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -9,8 +10,11 @@ import 'package:letsy_demo/constants/app_color_constant.dart';
 import 'package:letsy_demo/constants/assets_constants.dart';
 
 class EditView extends StatelessWidget {
-  final File image;
-  const EditView({super.key, required this.image});
+  final Uint8List image;
+  const EditView({
+    super.key,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,8 @@ class EditView extends StatelessWidget {
         color: Colors.transparent,
         image: DecorationImage(
           scale: 0.1,
-          image: FileImage(image, scale: 0.1),
+          image: MemoryImage(image, scale: 0.1),
+          // image: FileImage(image, scale: 0.1),
           fit: BoxFit.fill,
         ),
       ),
@@ -50,7 +55,7 @@ class EditView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(40),
                           ),
                         ),
-                        child: Image.file(
+                        child: Image.memory(
                           image,
                           key: UniqueKey(),
                           fit: BoxFit.contain,

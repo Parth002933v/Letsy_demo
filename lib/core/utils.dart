@@ -7,7 +7,7 @@ Future<List<File>> pickImage() async {
   List<File> images = [];
   final imagePicker = ImagePicker();
 
-  final pickedImages = await imagePicker.pickMultiImage();
+  final pickedImages = await imagePicker.pickMultiImage(imageQuality: 50);
 
   if (pickedImages.isNotEmpty) {
     for (final image in pickedImages) {

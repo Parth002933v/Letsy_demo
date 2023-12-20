@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:letsy_demo/core/core.dart';
@@ -27,20 +28,21 @@ class _HomeControllerNotifier extends StateNotifier<bool> {
     _ref.refresh(getSavedImageProvider);
   }
 
-  Future<List<io.File>?> _getSavedImages() async {
+  Future<List<Uint8List>?> _getSavedImages() async {
     try {
       final appDir = await getApplicationDocumentsDirectory();
       final directory = Directory(appDir.path);
       List<FileSystemEntity> files = directory.listSync();
 
-      List<File> imageFiles = [];
+      List<Uint8List> imageFiles = [];
 
       for (var file in files) {
         if (file is File &&
+            file.existsSync() &&
             (file.path.endsWith('.png') ||
                 file.path.endsWith('.jpg') ||
                 file.path.endsWith('.jpeg'))) {
-          imageFiles.add(file);
+          imageFiles.add(await file.readAsBytes());
         }
       }
 
