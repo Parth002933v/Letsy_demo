@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -6,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:letsy_demo/common/app_button.dart';
 import 'package:letsy_demo/common/app_image.dart';
-import 'package:letsy_demo/constants/app_color_constant.dart';
 import 'package:letsy_demo/constants/assets_constants.dart';
 
-class EditView extends StatelessWidget {
+class EditView extends StatefulWidget {
   final Uint8List image;
   const EditView({
     super.key,
@@ -17,78 +15,87 @@ class EditView extends StatelessWidget {
   });
 
   @override
+  State<EditView> createState() => _EditViewState();
+}
+
+class _EditViewState extends State<EditView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      key: UniqueKey(),
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        image: DecorationImage(
-          scale: 0.1,
-          image: MemoryImage(image, scale: 0.1),
-          // image: FileImage(image, scale: 0.1),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ).copyWith(bottom: 20),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Select Area to Modify',
-                      style: TextStyle(
-                          fontSize: 18, height: 3, fontWeight: FontWeight.bold),
-                    ),
-                    Expanded(
-                      child: ClipPath(
-                        clipper: ShapeBorderClipper(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                        ),
+    super.build(context);
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.memory(
+                widget.image,
+                cacheHeight: 300,
+                cacheWidth: 200,
+                fit: BoxFit.fill,
+                scale: 0.1,
+              ),
+            ),
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ).copyWith(bottom: 20),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Select Area to Modify',
+                        style: TextStyle(
+                            fontSize: 18,
+                            height: 3,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
                         child: Image.memory(
-                          image,
+                          widget.image,
                           key: UniqueKey(),
                           fit: BoxFit.contain,
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        editButtonContanor(
-                          icons: AssetsConstants.ic_close,
-                          onTap: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        RoundendSmallButton(
-                          icon: AssetsConstants.ic_pencil,
-                          onTap: () {},
-                          text: 'Refine',
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                        editButtonContanor(
-                          icons: AssetsConstants.ic_check,
-                          onTap: () {},
-                        ),
-                      ],
-                    )
-                  ],
+                      Spacer(),
+                      // SizedBox(height: 20.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          editButtonContanor(
+                            icons: AssetsConstants.ic_close,
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          RoundendSmallButton(
+                            icon: AssetsConstants.ic_pencil,
+                            onTap: () {},
+                            text: 'Refine',
+                            color: Colors.black.withOpacity(0.2),
+                          ),
+                          editButtonContanor(
+                            icons: AssetsConstants.ic_check,
+                            onTap: () {},
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
